@@ -1,0 +1,30 @@
+header {
+  height: 50px;
+  padding: 1rem;
+  color: white;
+  background: #b5dab4;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 1px 3px 1px 1px rgba(0, 0, 0, 0.2);
+}
+nav {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 40%;
+}
+
+.link {
+  text-decoration: none;
+  color: white;
+  font-size: 1.1rem;
+  margin: 0px 10px;
+}
+.link:hover {
+  color: #545e6f;
+}
+.link:active {
+  color: #545e6f;
+}
