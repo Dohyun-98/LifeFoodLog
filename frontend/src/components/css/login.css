@@ -62,3 +62,7 @@
 .login-form-button button:active {
   box-shadow: none;
 }
+
+Button {
+  cursor: pointer;
+}

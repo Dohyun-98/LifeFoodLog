@@ -1,7 +1,7 @@
 FROM node:14
 WORKDIR /usr/src/app
-COPY package*.json /user/app/
-COPY yarn.lock  /usr/app/
+COPY package*.json /
+COPY yarn.lock  /
 RUN yarn install 
-COPY . /usr/app
+COPY . /
 CMD yarn start:dev

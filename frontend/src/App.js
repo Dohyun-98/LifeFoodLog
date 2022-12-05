@@ -1,10 +1,10 @@
-import { Header } from "./components/header";
+import { Header } from "./components/Header";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Footer } from "./components/footer";
+import { Footer } from "./components/Footer";
+import { Login } from "./components/Login";
+import { Signup } from "./components/Signup";
 
 import "./app.css";
-import { Login } from "./components/login";
-import { Signup } from "./components/signup";
 
 function App() {
   return (

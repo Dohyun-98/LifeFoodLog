@@ -4,18 +4,18 @@ services:
   backend:
     build:
       context: .
-      dockerfile: dockerfile
+      dockerfile: dockerFile
     ports:
       - 3000:3000
     volumes:
       - ./src:/usr/app/src
       - ./common:/usr/app/common
     env_file:
-      - ./env.docker
+      - ./.docker.env
 
   database:
     platform: linux/x86_64
-    image: mysql:lastest
+    image: mysql:latest
     environment:
       MYSQL_DATABASE: 'LifeFoodLog'
       MYSQL_ROOT_PASSWORD: 'root'
