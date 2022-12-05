@@ -4,6 +4,7 @@ import {
   Controller,
   Get,
   Param,
+  Patch,
   Post,
   UseInterceptors,
 } from '@nestjs/common';
@@ -25,4 +26,7 @@ export class UsersController {
     const result = await this.usersService.create({ user });
     return new UserResponseDto(result);
   }
+
+  @Patch()
+  async updateUser(@Body user:)
 }
