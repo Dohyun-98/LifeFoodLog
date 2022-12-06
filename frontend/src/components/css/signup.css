@@ -23,8 +23,10 @@
   height: 280px;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
+  margin: 0px 0px;
+  padding: 0px 0px;
 }
 
 .email-form {
@@ -123,4 +125,15 @@
 
 .display-disable {
   display: none;
+  height: 0;
+}
+
+.danger-message-form {
+  margin: 0px;
+  padding: 0px;
+  height: 25px;
+  font-size: 2px;
+  color: red;
+  display: flex;
+  align-items: center;
 }

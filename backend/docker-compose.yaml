@@ -6,10 +6,9 @@ services:
       context: .
       dockerfile: dockerFile
     ports:
-      - 3000:3000
+      - 8000:8000
     volumes:
       - ./src:/usr/app/src
-      - ./common:/usr/app/common
     env_file:
       - ./.docker.env
 
@@ -17,7 +16,7 @@ services:
     platform: linux/x86_64
     image: mysql:latest
     environment:
-      MYSQL_DATABASE: 'LifeFoodLog'
+      MYSQL_DATABASE: 'lifefoodlog'
       MYSQL_ROOT_PASSWORD: 'root'
     ports:
       - 3306:3306

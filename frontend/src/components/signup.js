@@ -1,63 +1,119 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import "./css/signup.css";
-let isAddAuth = false;
-function isPasswordSame() {
-  const password = document.getElementById("password").value;
-  const passwordCheck = document.getElementById("passwordCheck").value;
-  if (password === passwordCheck) {
-    document.getElementById("same").innerHTML = "비밀번호가 일치합니다.";
-    return true;
-  } else {
-    document.getElementById("same").innerHTML = "비밀번호가 일치하지 않습니다.";
-    return false;
-  }
-}
-
-async function sendEmail() {
-  // 이메일 인증 엘리먼트 추가
-  if (!isAddAuth) {
-    const input = document.getElementById("input-parent");
-    const button = document.getElementById("button-parent");
-    input.classList.remove("display-disable");
-    button.classList.remove("display-disable");
-
-    const newInput = document.createElement("input");
-    newInput.setAttribute("type", "text");
-    newInput.setAttribute("placeholder", "인증번호");
-    input.prepend(newInput);
-
-    const newButton = document.createElement("button");
-    newButton.innerHTML = "인증";
-    newButton.onclick = checkEmail;
-    button.appendChild(newButton);
-
-    // 전송을 재전송으로 변경
-    document.getElementById("send").innerHTML = "재전송";
-  }
-  isAddAuth = true;
-}
-
-async function checkEmail() {
-  // 이메일 인증 엘리먼트 삭제
-  if (isAddAuth) {
-    const input = document.getElementById("input-parent");
-    const button = document.getElementById("button-parent");
-
-    input.removeChild(document.getElementById("input-parent").firstChild);
-    button.removeChild(document.getElementById("button-parent").firstChild);
-
-    document.getElementById("send").innerHTML = "전송";
-    input.classList.add("display-disable");
-    button.classList.add("display-disable");
-  }
-  isAddAuth = false;
-}
-
+import { API } from "./config/config";
 export const Signup = () => {
   const [email, setEmail] = useState("");
   const [nickName, setNickName] = useState("");
   const [password, setPassword] = useState("");
   const [passwordCheck, setPasswordCheck] = useState("");
+  const [authNumber, setAuthNumber] = useState("");
+
+  const [isClicked, setIsClicked] = useState(false);
+  const [disableInput, setDisableInput] = useState(false);
+  const [disableSignup, setDisableSignup] = useState(false);
+
+  const [emailValid, setEmailValid] = useState(false);
+  const [passwordValid, setPasswordValid] = useState(false);
+  const [nickNameValid, setNickNameValid] = useState(false);
+  const [passwordCheckValid, setPasswordCheckValid] = useState(false);
+  const [authNumberValid, setAuthNumberValid] = useState(false);
+
+  useEffect(() => {
+    const regex =
+      /^(([^<>()\[\].,;:\s@"]+(\.[^<>()\[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
+    if (regex.test(email)) {
+      setEmailValid(true);
+    } else {
+      setEmailValid(false);
+    }
+  }, [email]);
+
+  useEffect(() => {
+    const regex =
+      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,16}$/g;
+    if (regex.test(password)) {
+      setPasswordValid(true);
+    } else {
+      setPasswordValid(false);
+    }
+  }, [password]);
+
+  useEffect(() => {
+    const regex = /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,16}$/gi;
+    if (regex.test(nickName)) {
+      setNickNameValid(true);
+    } else {
+      setNickNameValid(false);
+    }
+  }, [nickName]);
+
+  useEffect(() => {
+    if (password === passwordCheck) {
+      setPasswordCheckValid(true);
+    } else {
+      setPasswordCheckValid(false);
+    }
+  }, [passwordCheck, password]);
+
+  useEffect(() => {
+    if (
+      authNumberValid &&
+      passwordValid &&
+      nickNameValid &&
+      passwordCheckValid
+    ) {
+      setDisableSignup(false);
+    } else {
+      setDisableSignup(true);
+    }
+  }, [authNumberValid, passwordValid, nickNameValid, passwordCheckValid]);
+
+  const sendEmail = async () => {
+    if (!emailValid) {
+      return;
+    }
+    const checkClick = document.getElementById("send").value;
+    if (checkClick === "false") {
+      document.getElementById("send").value = "true";
+      setIsClicked(true);
+    }
+    setDisableInput(true);
+    await axios
+      .post(API.SENDMAIL, {
+        email: email,
+      })
+      .catch((err) => {
+        err.response.data.statusCode === 422
+          ? alert("이미 가입된 메일입니다.")
+          : alert("잠시 후 다시 시도해주세요.");
+      });
+  };
+
+  const Certification = async () => {
+    await axios
+      .post(API.VRYMAIL, {
+        email: email,
+        number: authNumber,
+      })
+      .then((res) => {
+        const checkClick = document.getElementById("send").value;
+        if (checkClick === "true") {
+          document.getElementById("send").value = "false";
+          setIsClicked(false);
+          setAuthNumberValid(true);
+        }
+      })
+      .catch((err) => {
+        err.response.data.statusCode === 422
+          ? alert("인증번호가 일치하지 않습니다.")
+          : alert("인증번호를 다시 입력해주세요.");
+      });
+  };
+
+  const signUp = async () => {
+    console.log("button clicked");
+  };
 
   return (
     <div className="signup-form">
@@ -69,42 +125,95 @@ export const Signup = () => {
             placeholder="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            disabled={disableInput}
           />
           <div className="auth-mail">
-            <button id="send" onClick={sendEmail}>
+            <button
+              id="send"
+              value={"false"}
+              onClick={sendEmail}
+              disabled={authNumberValid}
+              style={{
+                backgroundColor: authNumberValid ? "#d9d9d9" : "#f9f9f9",
+              }}
+            >
               전송
             </button>
           </div>
         </div>
-        <div className="email-form display-disable" id="input-parent">
-          <div className="auth-mail display-disable" id="button-parent"></div>
+        <div className="danger-message-form">
+          {!emailValid && email.length > 0 && (
+            <span>올바른 이메일을 입력해주세요</span>
+          )}
         </div>
+        {isClicked && (
+          <div className={"email-form"} id="input-parent">
+            <input
+              type="text"
+              placeholder="인증번호"
+              onChange={(e) => {
+                console.log(e.target.value);
+                setAuthNumber(e.target.value);
+              }}
+            />
+            <div className={"auth-mail"} id="button-parent">
+              <button onClick={Certification}>인증</button>
+            </div>
+          </div>
+        )}
+        {isClicked && (
+          <div className={"danger-message-form"} id="auth-number-message"></div>
+        )}
         <input
           type="text"
           placeholder="nickname"
           value={nickName}
           onChange={(e) => setNickName(e.target.value)}
         />
+        <div className="danger-message-form">
+          {!nickNameValid && nickName.length > 0 && (
+            <span>2~16자, 특수문자를 제외한 영문자를 포함합니다.</span>
+          )}
+        </div>
         <input
           type="password"
           placeholder="password"
           id="password"
-          onInput={isPasswordSame}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
+        <div className="danger-message-form">
+          {!passwordValid && password.length > 0 && (
+            <span>
+              8자이상 16이하 최소 1자이상의 영문자,숫자,특수문자를 포함합니다.
+            </span>
+          )}
+        </div>
         <input
           type="password"
           placeholder="password check"
           id="passwordCheck"
-          onInput={isPasswordSame}
           value={passwordCheck}
           onChange={(e) => setPasswordCheck(e.target.value)}
         />
-        <span id="same"></span>
+        <div className="danger-message-form">
+          {!passwordCheckValid && passwordCheck.length > 0 && (
+            <span>패스워드가 일치하지 않습니다.</span>
+          )}
+        </div>
       </div>
       <div className="signup-form-button">
-        <button>회원가입</button>
+        <button
+          disabled={disableSignup}
+          onClick={signUp}
+          style={
+            disableSignup
+              ? { backgroundColor: "#d9d9d9" }
+              : { backgroundColor: "#f9f9f9" }
+          }
+        >
+          회원가입
+        </button>
       </div>
     </div>
   );

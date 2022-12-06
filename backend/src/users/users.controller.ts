@@ -1,13 +1,5 @@
-import {
-  Body,
-  ClassSerializerInterceptor,
-  Controller,
-  Get,
-  Param,
-  Patch,
-  Post,
-  UseInterceptors,
-} from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { UserCreateDto } from './dto/users.create.dto';
 import { UserRequestDto } from './dto/users.request.dto';
 import { UserResponseDto } from './dto/users.responese.dto';
 import { UsersService } from './users.service';
@@ -22,11 +14,11 @@ export class UsersController {
   }
 
   @Post()
-  async createUser(@Body() user: UserRequestDto): Promise<UserResponseDto> {
+  async createUser(@Body() user: UserCreateDto): Promise<UserResponseDto> {
     const result = await this.usersService.create({ user });
     return new UserResponseDto(result);
   }
 
-  @Patch()
-  async updateUser(@Body user:)
+  // @Patch()
+  // async updateUser(@Body user:)
 }

@@ -14,6 +14,11 @@ export class User {
   @Column()
   @IsString()
   @IsNotEmpty()
+  nickname: string;
+
+  @Column({ unique: true })
+  @IsString()
+  @IsNotEmpty()
   password: string;
 
   @Column({ default: 'user' })

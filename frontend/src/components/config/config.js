@@ -9,7 +9,9 @@ export const API = {
   //   TAGDATA: `${BASE_URL}/branch_tags/userTagList`,
   //   DITAILLIST: `${BASE_URL}/postings`,
   //   KEYWORDS: `${BASE_URL}/keywords/list`,
-  LOGIN: `${BASE_URL}/users/signup`,
+  LOGIN: `${BASE_URL}/users`,
+  SENDMAIL: `${BASE_URL}/auth/mail`,
+  VRYMAIL: `${BASE_URL}/auth/authentication`,
   //   DETAIL_PAGE: `${BASE_URL}/postings/detail`,
   //   RELATED: `${BASE_URL}/postings`,
 };

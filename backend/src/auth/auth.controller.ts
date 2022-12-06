@@ -15,4 +15,16 @@ export class AuthController {
     );
     return await this.authService.getAccessToken(user);
   }
+
+  @Post('mail')
+  async sendMail(@Body() body: { email: string }): Promise<boolean> {
+    return await this.authService.sendMail(body.email as string);
+  }
+
+  @Post('authentication')
+  async authentication(
+    @Body() body: { email: string; number: string },
+  ): Promise<boolean> {
+    return await this.authService.authenticationMail(body.email, body.number);
+  }
 }
