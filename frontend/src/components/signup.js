@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./css/signup.css";
-import { API } from "./config/config";
+import { API } from "../config/config";
+import { useNavigate } from "react-router-dom";
+
 export const Signup = () => {
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [nickName, setNickName] = useState("");
   const [password, setPassword] = useState("");
@@ -83,6 +87,7 @@ export const Signup = () => {
       .post(API.SENDMAIL, {
         email: email,
       })
+      .then(alert("인증번호가 전송되었습니다."))
       .catch((err) => {
         err.response.data.statusCode === 422
           ? alert("이미 가입된 메일입니다.")
@@ -112,7 +117,25 @@ export const Signup = () => {
   };
 
   const signUp = async () => {
-    console.log("button clicked");
+    if (disableSignup) {
+      return;
+    }
+    await axios
+      .post(API.SIGNUP, {
+        email: email,
+        password: password,
+        nickname: nickName,
+      })
+      .catch((err) => {
+        err.response.data.message === "not auth"
+          ? alert("메일 인증 후 회원가입이 가능합니다.")
+          : err.response.data.message === "already exist email"
+          ? alert("이미 가입된 이메일입니다.")
+          : alert("이미 존재하는 닉네임입니다.");
+        return;
+      });
+    alert("회원가입이 완료되었습니다.");
+    navigate("/login");
   };
 
   return (
@@ -135,9 +158,10 @@ export const Signup = () => {
               disabled={authNumberValid}
               style={{
                 backgroundColor: authNumberValid ? "#d9d9d9" : "#f9f9f9",
+                fontSize: isClicked ? "0.7rem" : "0.8rem",
               }}
             >
-              전송
+              {authNumberValid ? "인증완료" : isClicked ? "재전송" : "인증"}
             </button>
           </div>
         </div>
@@ -152,7 +176,6 @@ export const Signup = () => {
               type="text"
               placeholder="인증번호"
               onChange={(e) => {
-                console.log(e.target.value);
                 setAuthNumber(e.target.value);
               }}
             />

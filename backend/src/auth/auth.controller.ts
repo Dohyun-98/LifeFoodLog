@@ -1,8 +1,11 @@
 import { Body, Controller, Post } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { AccessToken } from 'src/commons/types/accessToken';
+import { UserEmailDto } from 'src/users/dto/users.email.dto';
 import { UserRequestDto } from 'src/users/dto/users.request.dto';
 import { AuthService } from './auth.service';
 
+@ApiTags('auth')
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
@@ -17,8 +20,8 @@ export class AuthController {
   }
 
   @Post('mail')
-  async sendMail(@Body() body: { email: string }): Promise<boolean> {
-    return await this.authService.sendMail(body.email as string);
+  async sendMail(@Body() user: UserEmailDto): Promise<boolean> {
+    return await this.authService.sendMail(user);
   }
 
   @Post('authentication')
