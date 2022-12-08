@@ -1,5 +1,15 @@
-import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
 import { JwtAuthGuard } from 'src/commons/guards/jwt-auth.guard';
+import { JwtUser } from 'src/commons/types/jwtUser';
 import { UserCreateDto } from './dto/users.create.dto';
 import { UserResponseDto } from './dto/users.responese.dto';
 import { UsersService } from './users.service';
@@ -10,8 +20,8 @@ export class UsersController {
 
   @UseGuards(JwtAuthGuard)
   @Get()
-  async getMyProfile(@Param('id') id: string) {
-    const result = await this.usersService.findById({ id });
+  async getMyProfile(@Req() req: JwtUser): Promise<UserResponseDto> {
+    const result = await this.usersService.findById({ id: req.user.id });
     return new UserResponseDto(result);
   }
 
@@ -22,5 +32,8 @@ export class UsersController {
   }
 
   // @Patch()
-  // async updateUser(@Body user:)
+  // async UpdateMyProfile(@Req() req: JwtUser): Promise<UserResponseDto> {
+  //   const result = await this.usersService.update({ user: req.user });
+  //   return new UserResponseDto(result);
+  // }
 }
