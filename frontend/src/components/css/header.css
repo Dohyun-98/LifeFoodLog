@@ -11,9 +11,8 @@ header {
 }
 nav {
   display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  width: 40%;
+
+  width: 100%;
 }
 
 .link {
@@ -26,5 +25,26 @@ nav {
   color: #545e6f;
 }
 .link:active {
+  color: #545e6f;
+}
+
+ul {
+  width: 100%;
+  list-style-type: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+}
+li a {
+  text-decoration: none;
+  color: white;
+  font-size: 1.1rem;
+  margin: 0px 10px;
+}
+li a:hover {
+  color: #545e6f;
+}
+li a:active {
   color: #545e6f;
 }

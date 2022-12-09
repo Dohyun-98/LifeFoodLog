@@ -33,7 +33,7 @@ export const Login = () => {
       setCookie("accessToken", "bearer " + token.data.access_token, {
         HttpOnly: true,
       });
-      navigate("/");
+      window.location.replace("/");
     }
   };
 
