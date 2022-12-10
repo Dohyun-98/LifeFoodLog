@@ -23,11 +23,16 @@ export class Food {
   @Column()
   name: string;
 
+  @ApiProperty({
+    example: '100',
+    description: 'The kcal of the Food',
+    type: Number,
+  })
   @IsNotEmpty()
   @IsNumber()
   @Column()
   kcal: number;
 
   @ManyToOne(() => SubCategory)
-  subCategory: SubCategory;
+  subcategory: SubCategory;
 }

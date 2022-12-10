@@ -24,5 +24,6 @@ export class SubCategory {
   name: string;
 
   @ManyToOne(() => MainCategory)
-  mainCategory: MainCategory;
+  @IsNotEmpty()
+  maincategory: MainCategory;
 }

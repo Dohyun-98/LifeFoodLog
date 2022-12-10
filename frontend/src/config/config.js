@@ -13,6 +13,8 @@ export const API = {
   SIGNUP: `${BASE_URL}/users`,
   SENDMAIL: `${BASE_URL}/auth/mail`,
   VRYMAIL: `${BASE_URL}/auth/authentication`,
-  //   DETAIL_PAGE: `${BASE_URL}/postings/detail`,
+  GETMAINCATEGORY: `${BASE_URL}/main-category`,
+  GETSUBCATEGORY: `${BASE_URL}/sub-category/`,
+  GETFOODS: `${BASE_URL}/foods/`,
   //   RELATED: `${BASE_URL}/postings`,
 };

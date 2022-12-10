@@ -12,7 +12,7 @@
   position: absolute;
   padding: 0px 0px;
   margin: 0px 0px;
-  top: 50%;
+  top: 55%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 100;
@@ -74,6 +74,8 @@
   cursor: pointer;
 }
 .modal-select-group {
+  display: flex;
+  flex-direction: row;
   width: 70%;
   height: 100%;
   border-right: 3px solid #e9e9e9;
@@ -82,4 +84,88 @@
 .modal-selected-group {
   width: 30%;
   height: 100%;
+}
+
+.modal-select-box {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid #e9e9e9;
+}
+
+.main-category {
+  width: 30%;
+}
+
+.sub-category {
+  width: 30%;
+}
+
+.name {
+  width: 40%;
+}
+
+.select-box-title {
+  width: 100%;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 3px solid #e9e9e9;
+  border-radius: 5px;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+  font-weight: 450;
+  margin: 0px 0px 1px 0px;
+}
+
+.select-box-title > span {
+  font-size: 15px;
+  width: 100%;
+  text-align: center;
+}
+
+.modal-select-box > span {
+  font-size: 14px;
+  width: 100%;
+  text-align: center;
+  padding: 5px 0px;
+  border-radius: 3px;
+  cursor: pointer;
+  border: 1px solid #e9e9e9;
+  margin: 1 px 0px;
+}
+
+.modal-select-box > span:hover {
+  background-color: #cae1f2;
+}
+
+.modal-selected-box {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid #e9e9e9;
+}
+
+.modal-selected-box > span {
+  font-size: 14px;
+  width: 100%;
+  text-align: center;
+  padding: 5px 0px;
+  border-radius: 3px;
+  background-color: #cae1f2;
+  cursor: pointer;
+  border: 1px solid #e9e9e9;
+  margin: 1 px 0px;
+}
+
+.select-clicked {
+  background-color: #cae1f2;
+}
+
+.select-unclicked {
+  background-color: white;
 }

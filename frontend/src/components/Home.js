@@ -54,8 +54,6 @@ export const Home = () => {
   ];
 
   const visibleModal = (time) => {
-    console.log(time);
-
     setModalVisible(true);
   };
   return (
@@ -74,10 +72,10 @@ export const Home = () => {
         >
           <SelectDashBoard title={"아침"} />
         </button>
-        <button className="select-button">
+        <button className="select-button" onClick={visibleModal}>
           <SelectDashBoard title={"점심"} />
         </button>
-        <button className="select-button">
+        <button className="select-button" onClick={visibleModal}>
           <SelectDashBoard title={"저녁"} />
         </button>
       </div>
