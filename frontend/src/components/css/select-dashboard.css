@@ -1,0 +1,23 @@
+.select-dashboard-item {
+  width: 150px;
+  height: 80px;
+}
+
+.dashboard-title {
+  font-size: 14px;
+  color: gray;
+}
+
+.dashboard-container {
+  margin: 10px 0;
+  display: flex;
+  align-items: center;
+}
+
+.dashboard-container {
+  font-size: 13px;
+}
+
+.dashboard-desc {
+  font-size: 11px;
+}

@@ -7,6 +7,8 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { RedisClientOptions } from 'redis';
+import { FoodModule } from './food/food.module';
+import { FoodsModule } from './foods/foods.module';
 import * as redisStore from 'cache-manager-redis-store';
 
 @Module({
@@ -42,6 +44,8 @@ import * as redisStore from 'cache-manager-redis-store';
       url: process.env.REDIS_URL,
       isGlobal: true,
     }),
+    FoodModule,
+    FoodsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

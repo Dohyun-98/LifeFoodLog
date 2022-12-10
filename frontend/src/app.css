@@ -17,6 +17,7 @@
 .content-box {
   height: auto;
   min-height: calc(100vh - 100px);
+  min-width: 840px;
   display: flex;
   flex-direction: column;
   justify-content: center;

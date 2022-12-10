@@ -5,6 +5,7 @@ footer {
   margin: 0;
   text-align: center;
   height: 50px;
+  min-width: 1000px;
 }
 
 .footer-message {

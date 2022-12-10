@@ -19,7 +19,8 @@ function App() {
           <Header isLogin className="header" />
           <div className="content-box">
             <Routes>
-              <Route path="/" element={<PrivateRoute component={Home} />} />
+              {/* <Route path="/" element={<PrivateRoute component={Home} />} /> */}
+              <Route path="/" element={<Home />} />
               <Route
                 path="/mypage"
                 element={<PrivateRoute component={MyPage} />}
