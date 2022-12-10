@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { SubCategory } from 'src/sub-category/entity/sub-category.entity';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Food {
@@ -26,4 +27,7 @@ export class Food {
   @IsNumber()
   @Column()
   kcal: number;
+
+  @ManyToOne(() => SubCategory)
+  subCategory: SubCategory;
 }
