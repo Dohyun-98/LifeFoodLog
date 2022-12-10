@@ -21,7 +21,11 @@ export const Header = () => {
 
   return (
     <header>
-      <h1>LifeFoodLog</h1>
+      <h1>
+        <Link to="/" className="title-link">
+          LifeFoodLog
+        </Link>
+      </h1>
       <nav>
         <ul>
           <li>
