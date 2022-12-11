@@ -1,6 +1,8 @@
 .select-dashboard-item {
   width: 150px;
   height: 80px;
+  display: flex;
+  flex-direction: column;
 }
 
 .dashboard-title {
@@ -9,15 +11,42 @@
 }
 
 .dashboard-container {
+  height: 100%;
   margin: 10px 0;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 0 10px;
 }
 
 .dashboard-container {
   font-size: 13px;
+  display: flex;
+  flex-direction: column;
 }
 
 .dashboard-desc {
   font-size: 11px;
+}
+
+.total-box {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+  font-size: 14px;
+  color: gray;
+  width: 100%;
+  border-top: 1px solid #e5e5e5;
+  padding-top: 10px;
+}
+
+.empty-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+}
+.empty-text {
+  font-size: 14px;
 }

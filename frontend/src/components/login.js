@@ -30,7 +30,7 @@ export const Login = () => {
         alert("아이디 또는 패스워드가 틀렸습니다.");
       });
     if (token.data.access_token) {
-      setCookie("accessToken", "bearer " + token.data.access_token, {
+      setCookie("accessToken", token.data.access_token, {
         HttpOnly: true,
       });
       window.location.replace("/");

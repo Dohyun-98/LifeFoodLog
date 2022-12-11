@@ -14,7 +14,11 @@ export const API = {
   SENDMAIL: `${BASE_URL}/auth/mail`,
   VRYMAIL: `${BASE_URL}/auth/authentication`,
   GETMAINCATEGORY: `${BASE_URL}/main-category`,
-  GETSUBCATEGORY: `${BASE_URL}/sub-category/`,
-  GETFOODS: `${BASE_URL}/foods/`,
+  GETSUBCATEGORY: `${BASE_URL}/sub-category`,
+  GETFOODS: `${BASE_URL}/foods`,
+  CREATEFOODLOG: `${BASE_URL}/food-log`,
+  GETSELECTEDFOOD: `${BASE_URL}/food-log`,
+  GETKCAL: `${BASE_URL}/today-kcal`,
+  GETGRAPHDATA: `${BASE_URL}/today-kcal`,
   //   RELATED: `${BASE_URL}/postings`,
 };

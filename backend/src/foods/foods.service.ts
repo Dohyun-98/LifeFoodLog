@@ -19,6 +19,14 @@ export class FoodsService {
     });
   }
 
+  async findOneById(id: string): Promise<Food> {
+    return await this.foodRepository.findOne({
+      where: {
+        id,
+      },
+    });
+  }
+
   async findAll(): Promise<Food[]> {
     return await this.foodRepository.find();
   }

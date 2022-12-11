@@ -9,58 +9,71 @@ import {
 } from "react-vis";
 import { SelectDashBoard } from "./SelectDashBoard";
 import { SelectionModal } from "./SelectionModal";
+import axios from "axios";
+import { API } from "../config/config";
+import { getCookie } from "../utils/cookie/cookie";
 
 export const Home = () => {
-  const [breakfast, setBreakfast] = useState([]);
-  const [lunch, setLunch] = useState([]);
-  const [dinner, setDinner] = useState([]);
-  const [Yvalue, setYvalue] = useState(0);
+  const [breakfast_kcal, setBreakfastKcal] = useState(0);
+  const [lunchKcal_kcal, setLunchKcal] = useState(0);
+  const [dinnerKcal_kcal, setDinnerKcal] = useState(0);
+  const [totalKcal, setTotalKcal] = useState(0);
+
+  const [time, setTime] = useState("");
+  const [periodBreakfast, setPeriodBreakfast] = useState(0);
+  const [periodLunch, setPeriodLunch] = useState(0);
+  const [periodDinner, setPeriodDinner] = useState(0);
   const [modalVisible, setModalVisible] = useState(false);
 
+  async function asyncgetKcalData() {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${getCookie("accessToken")}`,
+      },
+    };
+    const result = await axios.get(API.GETKCAL, config).catch((err) => {
+      alert("잠시 후 다시 시도해주세요.");
+    });
+
+    if (result) {
+      setBreakfastKcal(result.data.breakfastKcal);
+      setLunchKcal(result.data.lunchKcal);
+      setDinnerKcal(result.data.dinnerKcal);
+      setTotalKcal(result.data.totalKcal);
+    }
+  }
+
+  const getBarGraphData = async (period) => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${getCookie("accessToken")}`,
+      },
+    };
+    const data = axios
+      .get(API.GETGRAPHDATA + "/" + period, config)
+      .catch((err) => {
+        alert("잠시 후 다시 시도해주세요.");
+      });
+  };
+
   useEffect(() => {
-    const max = Math.max(...breakfast, ...lunch, ...dinner);
-    setYvalue(max);
-  }, [breakfast, lunch, dinner]);
-  // 음식을 선택하는 모달창을 띄울 때 음식에 대한 데이터(id, category name kcal)
-  const foodData = [
-    {
-      id: 1,
-      maincategory: "식사",
-      subcategory: "한식",
-      name: "고등어 구이",
-      kcal: 100,
-    },
-    {
-      id: 2,
-      maincategory: "디저트",
-      subcategory: "커피",
-      name: "아메리카노",
-      kcal: 400,
-    },
-    {
-      id: 3,
-      maincategory: "간식",
-      subcategory: "과자",
-      name: "달걀과자",
-      kcal: 300,
-    },
-    {
-      id: 3,
-      maincategory: "과일&채소",
-      subcategory: "과일",
-      name: "사과",
-      kcal: 300,
-    },
-  ];
+    asyncgetKcalData();
+    getBarGraphData(7);
+  }, []);
 
   const visibleModal = (time) => {
     setModalVisible(true);
+    setTime(time);
   };
   return (
     <div className="home">
       {modalVisible ? (
         // 세로 중복선택 카테고리
-        <SelectionModal setModalVisible={setModalVisible} />
+        <SelectionModal
+          time={time}
+          setModalVisible={setModalVisible}
+          asyncgetKcalData={asyncgetKcalData}
+        />
       ) : null}
       <div className="wrapper-title">
         <span>Today</span>
@@ -70,17 +83,23 @@ export const Home = () => {
           className="select-button"
           onClick={() => visibleModal("breakfast")}
         >
-          <SelectDashBoard title={"아침"} />
+          <SelectDashBoard kcal={breakfast_kcal} title={"breakfast"} />
         </button>
-        <button className="select-button" onClick={visibleModal}>
-          <SelectDashBoard title={"점심"} />
+        <button className="select-button" onClick={() => visibleModal("lunch")}>
+          <SelectDashBoard kcal={lunchKcal_kcal} title={"lunch"} />
         </button>
-        <button className="select-button" onClick={visibleModal}>
-          <SelectDashBoard title={"저녁"} />
+        <button
+          className="select-button"
+          onClick={() => visibleModal("dinner")}
+        >
+          <SelectDashBoard kcal={dinnerKcal_kcal} title={"dinner"} />
         </button>
       </div>
+      <div className="total-kcal-box">
+        <span>오늘 하루 총열량: {totalKcal} kcal</span>
+      </div>
       <div className="wrapper-title wrapper-down-title ">
-        <span>하루 열량 그래프</span>
+        <span>기간별 열량 그래프</span>
         <select className="select-chart">
           <option value="1">1주일</option>
           <option value="2">1개월</option>
@@ -93,6 +112,7 @@ export const Home = () => {
         <XYPlot stackBy="y" width={800} height={300} margin={80}>
           <XAxis attr="x" attrAxis="y" orientation="bottom" />
           <YAxis attr="y" attrAxis="x" orientation="left" />
+
           <VerticalBarSeries
             cluster="stack 1"
             data={[

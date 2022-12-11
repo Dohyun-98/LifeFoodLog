@@ -10,6 +10,8 @@ import { RedisClientOptions } from 'redis';
 import { FoodsModule } from './foods/foods.module';
 import { MainCategoryModule } from './main-category/main-category.module';
 import { SubCategoryModule } from './sub-category/sub-category.module';
+import { FoodLogModule } from './food-log/food-log.module';
+import { TodayKcalModule } from './today-kcal/today-kcal.module';
 import * as redisStore from 'cache-manager-redis-store';
 
 @Module({
@@ -48,6 +50,8 @@ import * as redisStore from 'cache-manager-redis-store';
     FoodsModule,
     MainCategoryModule,
     SubCategoryModule,
+    FoodLogModule,
+    TodayKcalModule,
   ],
   controllers: [AppController],
   providers: [AppService],

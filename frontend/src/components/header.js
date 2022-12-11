@@ -30,15 +30,6 @@ export const Header = () => {
         <ul>
           <li>
             {isLoginValid ? (
-              <Link to="/" className="link">
-                Home
-              </Link>
-            ) : (
-              <div></div>
-            )}
-          </li>
-          <li>
-            {isLoginValid ? (
               <Link to="/board" className="link">
                 게시판
               </Link>
