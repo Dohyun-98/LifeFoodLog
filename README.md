@@ -47,13 +47,17 @@
 <img src="https://user-images.githubusercontent.com/68360133/206948626-5f0f1f2a-54cf-48f0-827e-96d6883fb68a.gif" width="800px">
 </p>
 
-2. 기간별 열량 그래프 [미완성 및 진행중]<br>
+2. 기간별 열량 그래프 <br>
 <p align="left">
 <img src="https://user-images.githubusercontent.com/68360133/207023037-5b4ac653-02ea-46a6-b888-a02e275bae47.gif" width="800px">
 </p>
-- 현재 날짜(백엔드 서버 TimeZone)를 기준으로 선택된 값(일주일, 한달, 3달, 6달, 1년)만큼의 데이터를 가져와 그래프로 표현
+- 현재 날짜(백엔드 서버 TimeZone)를 기준으로 선택된 값(일주일, 한달, 3달, 6달, 1년)만큼의 데이터를 가져와 그래프로 표시
+<br>
 
-3. 기간별 섭취 음식 분류[미완성 및 진행중]<br>
+3. 기간별 섭취 음식 분류 그래프<br>
+<p align="left">
+<img src="https://user-images.githubusercontent.com/68360133/207038317-85645c29-bbb7-47f2-aa19-dba66f5dd3fe.png" width="800px">
+</p>
 4. 특정 날짜 열량 및 섭취 음식 조회[미완성 및 진행중]<br>
 
 ### 4. 게시판 [미완성 및 진행중]
