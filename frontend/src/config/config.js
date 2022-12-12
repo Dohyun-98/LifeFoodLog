@@ -20,5 +20,6 @@ export const API = {
   GETSELECTEDFOOD: `${BASE_URL}/food-log`,
   GETKCAL: `${BASE_URL}/today-kcal`,
   GETGRAPHDATA: `${BASE_URL}/today-kcal`,
+  GETCIRCLEDATA: `${BASE_URL}/food-log`,
   //   RELATED: `${BASE_URL}/postings`,
 };

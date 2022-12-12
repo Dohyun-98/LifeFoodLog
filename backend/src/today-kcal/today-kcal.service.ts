@@ -59,7 +59,7 @@ export class TodayKcalService {
     return todayKcal;
   }
 
-  async findByPeriod(userId: string, period: number) {
+  async findByDay(userId: string, period: number) {
     // 쿼리 빌더를 이용해 오늘부터 period일 전까지의 데이터를 가져온다.
     const todayKcal = await this.todayKcalRepository
 
@@ -74,7 +74,77 @@ export class TodayKcalService {
           endDate: new Date(new Date().setHours(23, 59, 59, 999)),
         },
       )
+      .orderBy('todayKcal.createdAt', 'ASC')
       .getMany();
+    return todayKcal;
+  }
+
+  async findByWeek(userId: string, period: number) {
+    // timezone 기준으로 period 주전까지 1주씩 데이터 평균(breakfastKcal, lunchKcal, dinnerKcal, totalKcal)을 가져온다.
+    const result = Array.from({ length: period }, (_, i) => period - i);
+    console.log(result);
+    const todayKcal = Promise.all(
+      result.map(async (i) => {
+        console.log(new Date(new Date().setDate(new Date().getDate() - i * 7)));
+        console.log(
+          new Date(new Date().setDate(new Date().getDate() - (i - 1) * 7)),
+        );
+        const weekKcal = await this.todayKcalRepository
+          .createQueryBuilder('todayKcal')
+          .select(
+            'AVG(todayKcal.breakfastKcal) as breakfastKcal, AVG(todayKcal.lunchKcal) as lunchKcal, AVG(todayKcal.dinnerKcal) as dinnerKcal, AVG(todayKcal.totalKcal) as totalKcal',
+          )
+          .where(
+            'todayKcal.user = :userId AND todayKcal.createdAt BETWEEN :startDate AND :endDate',
+            {
+              userId,
+              startDate: new Date(
+                new Date().setDate(new Date().getDate() - i * 7),
+              ),
+              endDate: new Date(
+                new Date().setDate(new Date().getDate() - (i - 1) * 7),
+              ),
+            },
+          )
+          .getRawOne();
+        return weekKcal;
+      }),
+    );
+    return todayKcal;
+  }
+
+  async findByMonth(userId: string, period: number) {
+    // timezone 기준으로 period 달전까지 1달씩 데이터 평균(breakfastKcal, lunchKcal, dinnerKcal, totalKcal)을 가져온다.
+    const result = Array.from({ length: period }, (_, i) => period - i);
+    console.log(result);
+    const todayKcal = Promise.all(
+      result.map(async (i) => {
+        console.log(new Date(new Date().setMonth(new Date().getMonth() - i)));
+        console.log(
+          new Date(new Date().setMonth(new Date().getMonth() - (i - 1))),
+        );
+        const monthKcal = await this.todayKcalRepository
+          .createQueryBuilder('todayKcal')
+          .select(
+            'AVG(todayKcal.breakfastKcal) as breakfastKcal, AVG(todayKcal.lunchKcal) as lunchKcal, AVG(todayKcal.dinnerKcal) as dinnerKcal, AVG(todayKcal.totalKcal) as totalKcal',
+          )
+          .where(
+            'todayKcal.user = :userId AND todayKcal.createdAt BETWEEN :startDate AND :endDate',
+            {
+              userId,
+              startDate: new Date(
+                new Date().setMonth(new Date().getMonth() - i),
+              ),
+              endDate: new Date(
+                new Date().setMonth(new Date().getMonth() - (i - 1)),
+              ),
+            },
+          )
+          .getRawOne();
+        console.log(monthKcal);
+        return monthKcal;
+      }),
+    );
     return todayKcal;
   }
 }

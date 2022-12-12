@@ -1,5 +1,14 @@
-import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
 import { JwtAuthGuard } from 'src/commons/guards/jwt-auth.guard';
+import { JwtStrategy } from 'src/commons/strategies/jwt.strategy';
 import { JwtUser } from 'src/commons/types/jwtUser';
 import { MealTime } from 'src/commons/types/mealTime';
 import { FoodLogCreateDto } from './dto/food-log.create.dto';
@@ -52,5 +61,15 @@ export class FoodLogController {
   @Get('dinner')
   async getFoodLogOfDinner(@Req() req: JwtUser) {
     return this.foodLogService.getFoodLog(req.user.id, MealTime.DINNER);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get(':period')
+  async getFoodClassificationByPeriod(
+    @Req() req: JwtUser,
+    @Param('period') period: number,
+  ) {
+    console.log('period', period, req.user);
+    return await this.foodLogService.getFoodClassifyLog(req.user.id, period);
   }
 }

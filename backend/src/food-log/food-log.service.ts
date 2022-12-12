@@ -60,7 +60,6 @@ export class FoodLogService {
   }
 
   async getFoodLog(userId: string, mealtime: MealTime) {
-    //쿼리빌더를 사용하여 foodLog와 kcal을 가져온다.
     const foodLog = await this.foodLogRepository
       .createQueryBuilder('foodLog')
       .leftJoinAndSelect('foodLog.food', 'food')
@@ -72,7 +71,38 @@ export class FoodLogService {
       })
       .getMany();
 
-    console.log(foodLog);
     return foodLog;
+  }
+
+  async getFoodClassifyLog(userId: string, period: number) {
+    const foodLog = await this.foodLogRepository
+
+      .createQueryBuilder('foodLog')
+      .leftJoinAndSelect('foodLog.food', 'food')
+      .where('foodLog.user.id = :userId', { userId })
+      .andWhere('foodLog.createdAt BETWEEN :start AND :end', {
+        start: new Date(new Date().setDate(new Date().getDate() - period)),
+        end: new Date(new Date().setHours(23, 59, 59, 999)),
+      })
+      .getMany();
+
+    const foodNameList = foodLog.map((food) => food.food.name);
+    const foodNameSet = new Set(foodNameList);
+    const foodNameArray = Array.from(foodNameSet);
+    const foodNameCount = foodNameArray.map((foodName) => {
+      return {
+        name: foodName,
+        count: foodNameList.filter((name) => name === foodName).length,
+      };
+    });
+    const total = foodNameCount.reduce((acc, cur) => acc + cur.count, 0);
+    const foodLogCount = foodNameCount.map((food) => {
+      return {
+        label: food.name,
+        angle: (food.count / total) * 100,
+      };
+    });
+
+    return foodLogCount;
   }
 }

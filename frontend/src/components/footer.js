@@ -5,8 +5,8 @@ export const Footer = () => {
   return (
     <footer>
       <div className="inner">
-        <div className="footer-message">Life Log..</div>
-        <div className="footer-contact">컨택: dream@fun-coding.org</div>
+        <div className="footer-message">Log your Every Kcal.</div>
+        <div className="footer-contact">ehgusrlaeh@naver.com</div>
         <div className="footer-copyright">
           Copyrigh 2020 All ⓒ rights reserved
         </div>
