@@ -9,6 +9,8 @@ import { NotFound } from "./components/errors/404";
 import { Home } from "./components/Home";
 import { PrivateRoute } from "./components/PrivateRoute";
 import { MyPage } from "./components/MyPage";
+import { Board } from "./components/Board";
+import { WriteBoard } from "./components/WriteBoard";
 
 // PrivateRoute로 / 접근
 function App() {
@@ -24,6 +26,14 @@ function App() {
               <Route
                 path="/mypage"
                 element={<PrivateRoute component={MyPage} />}
+              />
+              <Route
+                path="/board"
+                element={<PrivateRoute component={Board} />}
+              />
+              <Route
+                path="/board/write"
+                element={<PrivateRoute component={WriteBoard} />}
               />
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
