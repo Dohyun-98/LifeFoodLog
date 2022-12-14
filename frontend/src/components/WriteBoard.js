@@ -17,7 +17,7 @@ export const WriteBoard = () => {
           <textarea placeholder="내용을 입력하세요" />
         </div>
         <div className="button-group">
-          <button>등록</button>
+          <button onClick={() => console.log("등록")}>등록</button>
           <button>취소</button>
         </div>
       </div>
