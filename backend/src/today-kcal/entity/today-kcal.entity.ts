@@ -23,7 +23,9 @@ export class TodayKcal {
     description: 'The id of the user',
     type: String,
   })
-  @ManyToOne(() => User)
+  @ManyToOne(() => User, {
+    onDelete: 'CASCADE',
+  })
   user: User;
 
   @ApiProperty({

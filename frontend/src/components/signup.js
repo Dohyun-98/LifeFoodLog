@@ -140,7 +140,7 @@ export const Signup = () => {
 
   return (
     <div className="signup-form">
-      <div className="signup-form-title">LifeFoodLog</div>
+      <div className="signup-form-title">MyKcaLog</div>
       <div className="signup-form-input">
         <div className="email-form">
           <input

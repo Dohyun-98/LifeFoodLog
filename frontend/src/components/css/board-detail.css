@@ -48,7 +48,8 @@
 .detail-writer {
   width: 20%;
   border: 1px solid #ced4da;
-  background-color: #f2f2f2;
+  background-color: #cae1f2;
+  color: gray;
   border-bottom: none;
   border-right: none;
   padding: 5px 5px;
@@ -68,8 +69,9 @@
 .detail-create-time {
   width: 20%;
   border: 1px solid #ced4da;
-  background-color: #f2f2f2;
+  background-color: #cae1f2;
   border-bottom: none;
+  color: gray;
   border-right: none;
   padding: 5px 5px;
   text-align: center;
@@ -95,9 +97,10 @@
 .detail-content {
   width: 10%;
   border: 1px solid #ced4da;
-  background-color: #f2f2f2;
+  background-color: #cae1f2;
   border-right: none;
   padding: 5px 5px;
+  color: gray;
   text-align: center;
   border-bottom-left-radius: 3px;
 }

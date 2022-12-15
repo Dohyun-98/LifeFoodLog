@@ -18,7 +18,9 @@ export class FoodLog {
   @Column({ type: 'enum', enum: MealTime })
   mealtime: MealTime;
 
-  @ManyToOne(() => User)
+  @ManyToOne(() => User, {
+    onDelete: 'CASCADE',
+  })
   user: User;
 
   @ManyToOne(() => Food)

@@ -77,4 +77,26 @@ export class AuthService {
     await this.cacheManager.set(email, 'success', { ttl: 600 });
     return true;
   }
+
+  async sendPwMail(user_: UserEmailDto): Promise<boolean> {
+    const number = String(Math.floor(Math.random() * 1000000)).padStart(6, '0');
+    await this.mailerService
+      .sendMail({
+        to: user_.email,
+        from: process.env.MAIL_SENDER,
+        subject: process.env.MAIL_SUBJECT,
+        html: `인증번호는 [${number}] 입니다.`,
+      })
+      .then(async () => {
+        const isFirstMail = await this.cacheManager.get(user_.email);
+        if (isFirstMail) {
+          await this.cacheManager.del(user_.email);
+        }
+        await this.cacheManager.set(user_.email, number, { ttl: 300 });
+      })
+      .catch((err) => {
+        throw new InternalServerErrorException(err);
+      });
+    return true;
+  }
 }

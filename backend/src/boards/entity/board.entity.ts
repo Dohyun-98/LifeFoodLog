@@ -53,7 +53,9 @@ export class Board {
     description: '작성자 번호',
     type: String,
   })
-  @ManyToOne(() => User)
+  @ManyToOne(() => User, {
+    onDelete: 'CASCADE',
+  })
   user: User;
 
   @ApiProperty({

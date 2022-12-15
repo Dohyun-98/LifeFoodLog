@@ -64,6 +64,7 @@ export const WriteBoard = () => {
         <div className="write-body">
           <span>내용</span>
           <textarea
+            spellCheck="false"
             placeholder="내용을 입력하세요"
             value={body}
             onChange={(e) => setBody(e.target.value)}

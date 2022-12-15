@@ -23,7 +23,7 @@ export const Header = () => {
     <header>
       <h1>
         <Link to="/" className="title-link">
-          LifeFoodLog
+          MyKcaLog
         </Link>
       </h1>
       <nav>

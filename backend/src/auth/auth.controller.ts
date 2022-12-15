@@ -30,4 +30,9 @@ export class AuthController {
   ): Promise<boolean> {
     return await this.authService.authenticationMail(body.email, body.number);
   }
+
+  @Post('pwmail')
+  async sendPwMail(@Body() user: UserEmailDto): Promise<boolean> {
+    return await this.authService.sendPwMail(user);
+  }
 }

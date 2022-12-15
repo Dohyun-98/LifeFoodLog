@@ -41,7 +41,7 @@ export const Login = () => {
 
   return (
     <div action="post" className="login-form">
-      <div className="login-form-title">LifeFoodLog</div>
+      <div className="login-form-title">MyKcaLog</div>
       <div className="login-form-input">
         <input
           type="email"

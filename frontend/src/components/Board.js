@@ -120,10 +120,10 @@ export const Board = () => {
                           onClick={() => moveBoardDetail(data.id)}
                         >
                           <td>{data.id}</td>
-                          <th className="th-title">
+                          <th className="th-content-title">
                             <a href="#!">
-                              {data.title.length > 15
-                                ? data.title.slice(0, 15) + "..."
+                              {data.title.length > 43
+                                ? data.title.slice(0, 40) + "..."
                                 : data.title}
                             </a>
                           </th>

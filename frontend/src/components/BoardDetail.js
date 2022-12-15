@@ -125,6 +125,7 @@ export const BoardDetail = () => {
             <div className="detail-content-content">{boardData.content}</div>
           ) : (
             <textarea
+              spellCheck="false"
               className="detail-content-content update-content"
               value={body}
               onChange={(e) => setBody(e.target.value)}
