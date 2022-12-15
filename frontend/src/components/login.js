@@ -32,6 +32,8 @@ export const Login = () => {
     if (token.data.access_token) {
       setCookie("accessToken", token.data.access_token, {
         HttpOnly: true,
+        Expires: 60 * 20,
+        MaxAge: 60 * 20,
       });
       window.location.replace("/");
     }

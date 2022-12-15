@@ -22,7 +22,7 @@ body {
 }
 
 .board-title {
-  width: 100%;
+  width: 800px;
   /* margin: 10px 30px 10px 30px; */
   /* padding: 10px 30px;  */
   font-size: 15px;
@@ -32,7 +32,7 @@ body {
   align-items: flex-start;
 }
 .board-search {
-  width: 100%;
+  width: 800px;
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
@@ -106,6 +106,19 @@ section.notice {
 .board-table .th-num {
   width: 100px;
   text-align: center;
+}
+
+.board-table .th-title {
+  width: 100px;
+  /* text-align: center; */
+}
+
+.board-table .th-text {
+  width: 100px;
+}
+
+.th-title a {
+  width: 100%;
 }
 
 .board-table .th-date {
@@ -272,5 +285,18 @@ section.notice {
 .write-button:hover {
   color: #fff;
   background-color: #dee2e6;
+  border-color: #dee2e6;
+}
+
+.non-active {
+  pointer-events: none;
+  cursor: default;
+  opacity: 0.6;
+  text-decoration: none;
+}
+
+.non-active:hover {
+  color: gray;
+  background-color: #fff;
   border-color: #dee2e6;
 }

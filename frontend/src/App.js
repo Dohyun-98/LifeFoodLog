@@ -11,6 +11,7 @@ import { PrivateRoute } from "./components/PrivateRoute";
 import { MyPage } from "./components/MyPage";
 import { Board } from "./components/Board";
 import { WriteBoard } from "./components/WriteBoard";
+import { BoardDetail } from "./components/BoardDetail";
 
 // PrivateRoute로 / 접근
 function App() {
@@ -34,6 +35,10 @@ function App() {
               <Route
                 path="/board/write"
                 element={<PrivateRoute component={WriteBoard} />}
+              />
+              <Route
+                path="/board/:id"
+                element={<PrivateRoute component={BoardDetail} />}
               />
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />

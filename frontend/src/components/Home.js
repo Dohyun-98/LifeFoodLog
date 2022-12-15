@@ -239,7 +239,6 @@ export const Home = () => {
       params
     );
 
-    console.log(data.data);
     setCircleData(data.data);
   };
 

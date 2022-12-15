@@ -21,5 +21,11 @@ export const API = {
   GETKCAL: `${BASE_URL}/today-kcal`,
   GETGRAPHDATA: `${BASE_URL}/today-kcal`,
   GETCIRCLEDATA: `${BASE_URL}/food-log`,
+  CREATEBOARD: `${BASE_URL}/boards`,
+  GETBOARDLIST: `${BASE_URL}/boards`,
+  GETBOARDDETAIL: `${BASE_URL}/boards`,
+  ISMYBOARD: `${BASE_URL}/boards/mine`,
+  UPDATEBOARD: `${BASE_URL}/boards`,
+  DELETEBOARD: `${BASE_URL}/boards`,
   //   RELATED: `${BASE_URL}/postings`,
 };
