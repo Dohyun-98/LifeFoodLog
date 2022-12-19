@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { API } from "../config/config";
 import { getCookie, removeCookie } from "../utils/cookie/cookie";
+import { isExpiration } from "../utils/cookie/is-expiration";
 import "./css/my-page.css";
 
 export const MyPage = () => {
@@ -24,9 +25,8 @@ export const MyPage = () => {
         Authorization: `Bearer ${getCookie("accessToken")}`,
       },
     };
-    const data = await axios.get(API.GETMYPROFILE, config).catch(() => {
-      alert("다시 로그인해주세요.");
-      // window.location.href = "/login";
+    const data = await axios.get(API.GETMYPROFILE, config).catch((err) => {
+      isExpiration(err.response.data.statusCode);
     });
     if (data) {
       setProfile(data.data);
@@ -52,8 +52,8 @@ export const MyPage = () => {
 
     const data = await axios
       .patch(API.UPDATENICKNAME, { nickname: updateNickname }, config)
-      .catch(() => {
-        alert("닉네임 변경에 실패했습니다.");
+      .catch((err) => {
+        isExpiration(err.response.data.statusCode);
       });
     if (data) {
       setUpdateNicknamestatus(false);
@@ -63,11 +63,7 @@ export const MyPage = () => {
 
   const sendMail = async () => {
     setIsUpdatePassword(true);
-    const config = {
-      headers: {
-        Authorization: `Bearer ${getCookie("accessToken")}`,
-      },
-    };
+
     await axios
       .post(API.SENDPWMAIL, {
         email: profile.email,
@@ -112,8 +108,8 @@ export const MyPage = () => {
     };
     await axios
       .patch(API.CHANGEPASSWORD, { password: newPassword }, config)
-      .catch(() => {
-        alert("비밀번호 변경에 실패했습니다.");
+      .catch((err) => {
+        isExpiration(err.response.data.statusCode);
       });
     setIsAuth(false);
     alert("비밀번호가 변경되었습니다.");
@@ -134,8 +130,8 @@ export const MyPage = () => {
             alert("탈퇴되었습니다.");
             window.location.href = "/login";
           })
-          .catch(() => {
-            alert("탈퇴에 실패했습니다.");
+          .catch((err) => {
+            isExpiration(err.response.data.statusCode);
           });
         console.log(data);
       }

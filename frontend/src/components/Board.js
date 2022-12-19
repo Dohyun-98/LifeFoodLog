@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { API } from "../config/config";
 import { getCookie } from "../utils/cookie/cookie";
+import { isExpiration } from "../utils/cookie/is-expiration";
 import "./css/board.css";
 
 export const Board = () => {
@@ -44,9 +45,10 @@ export const Board = () => {
         { params: { limit: pageLimit } },
         config
       )
-      .catch(() => {
-        alert("게시글 불러오기에 실패했습니다.");
+      .catch((err) => {
+        isExpiration(err.response.data.statusCode);
       });
+    console.log(data.data);
     setLastPage(data.data);
   };
 

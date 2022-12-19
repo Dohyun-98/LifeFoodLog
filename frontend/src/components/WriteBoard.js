@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { API } from "../config/config";
 import { getCookie } from "../utils/cookie/cookie";
+import { isExpiration } from "../utils/cookie/is-expiration";
 import "./css/writeboard.css";
 // 글쓰기 페이지 생성
 export const WriteBoard = () => {
@@ -34,8 +35,8 @@ export const WriteBoard = () => {
         },
         config
       )
-      .catch(() => {
-        alert("게시글 등록에 실패했습니다.");
+      .catch((err) => {
+        isExpiration(err.response.data.statusCode);
       });
 
     if (!data.data) {

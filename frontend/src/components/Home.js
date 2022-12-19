@@ -13,6 +13,7 @@ import { SelectionModal } from "./SelectionModal";
 import axios from "axios";
 import { API } from "../config/config";
 import { getCookie } from "../utils/cookie/cookie";
+import { isExpiration } from "../utils/cookie/is-expiration";
 
 export const Home = () => {
   const [breakfast_kcal, setBreakfastKcal] = useState(0);
@@ -26,6 +27,8 @@ export const Home = () => {
   const [periodDinner, setPeriodDinner] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [circleData, setCircleData] = useState([]);
+  const [barPeriod, setBarPeriod] = useState(7);
+  const [ciclePeriod, setCiclePeriod] = useState(7);
 
   async function asyncgetKcalData() {
     const config = {
@@ -34,7 +37,8 @@ export const Home = () => {
       },
     };
     const result = await axios.get(API.GETKCAL, config).catch((err) => {
-      alert("잠시 후 다시 시도해주세요.");
+      console.log(err);
+      isExpiration(err.response.data.statusCode);
     });
 
     if (result) {
@@ -54,7 +58,7 @@ export const Home = () => {
     const data = await axios
       .get(API.GETGRAPHDATA + "/day/" + period, config)
       .catch((err) => {
-        alert("잠시 후 다시 시도해주세요.");
+        isExpiration(err.response.data.statusCode);
       });
     const breakdfast = Array.from({ length: period }, (v, i) => {
       const date = new Date(
@@ -151,7 +155,7 @@ export const Home = () => {
     const data = await axios
       .get(API.GETGRAPHDATA + "/week/" + period, config)
       .catch((err) => {
-        alert("잠시 후 다시 시도해주세요.");
+        isExpiration(err.response.data.statusCode);
       });
     const breakfast = data.data.map((el, i) => {
       return {
@@ -187,7 +191,7 @@ export const Home = () => {
     const data = await axios
       .get(API.GETGRAPHDATA + "/month/" + period, config)
       .catch((err) => {
-        alert("잠시 후 다시 시도해주세요.");
+        isExpiration(err.response.data.statusCode);
       });
     const thisMonth = new Date().getMonth() + 1;
     const breakfast = data.data.map((el, i) => {
@@ -233,12 +237,11 @@ export const Home = () => {
       period: period,
     };
 
-    const data = await axios.get(
-      API.GETCIRCLEDATA + "/" + period,
-      config,
-      params
-    );
-
+    const data = await axios
+      .get(API.GETCIRCLEDATA + "/" + period, config, params)
+      .catch((err) => {
+        isExpiration(err.response.data.statusCode);
+      });
     setCircleData(data.data);
   };
 
@@ -254,6 +257,10 @@ export const Home = () => {
           time={time}
           setModalVisible={setModalVisible}
           asyncgetKcalData={asyncgetKcalData}
+          getBarGraphData={getBarGraphData}
+          getCircleDate={getCircleDate}
+          barPeriod={barPeriod}
+          ciclePeriod={ciclePeriod}
         />
       ) : null}
       <div className="wrapper-title">
@@ -283,7 +290,10 @@ export const Home = () => {
         <span>기간별 열량 그래프</span>
         <select
           className="select-chart"
-          onChange={(e) => getGraph(e.target.value)}
+          onChange={(e) => {
+            setBarPeriod(e.target.value);
+            getGraph(e.target.value);
+          }}
         >
           <option value="7">최근 일주일</option>
           <option value="4">최근 4주</option>
@@ -344,7 +354,10 @@ export const Home = () => {
         <span>기간별 섭취 음식 분류</span>
         <select
           className="select-chart"
-          onChange={(e) => getCircleDate(e.target.value)}
+          onChange={(e) => {
+            setCiclePeriod(e.target.value);
+            getCircleDate(e.target.value);
+          }}
         >
           <option value="7">1주일</option>
           <option value="30">1개월</option>

@@ -32,5 +32,6 @@ export const API = {
   UPDATENICKNAME: `${BASE_URL}/users`,
   CHANGEPASSWORD: `${BASE_URL}/users/password`,
   DELETEUSER: `${BASE_URL}/users`,
+  COMMENT: `${BASE_URL}/comments`,
   //   RELATED: `${BASE_URL}/postings`,
 };

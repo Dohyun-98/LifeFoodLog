@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { API } from "../config/config";
 import { getCookie } from "../utils/cookie/cookie";
+import { isExpiration } from "../utils/cookie/is-expiration";
 import "./css/selection-modal.css";
 
 export const SelectionModal = (props) => {
@@ -25,10 +26,11 @@ export const SelectionModal = (props) => {
           Authorization: `Bearer ${getCookie("accessToken")}`,
         },
       };
-      const selectedFoodData = await axios.get(
-        API.GETSELECTEDFOOD + "/" + props.time,
-        config
-      );
+      const selectedFoodData = await axios
+        .get(API.GETSELECTEDFOOD + "/" + props.time, config)
+        .catch((err) => {
+          isExpiration(err.response.data.statusCode);
+        });
       const selectedFood = selectedFoodData.data.map((food) => {
         return {
           id: food.food.id,
@@ -47,7 +49,7 @@ export const SelectionModal = (props) => {
     setFoodData([]);
 
     const res = await axios.get(API.GETSUBCATEGORY + "/" + id).catch((err) => {
-      alert("잠시 후 다시 시도해주세요.");
+      isExpiration(err.response.data.statusCode);
     });
     setSubcategoryData(res.data);
   };
@@ -55,7 +57,7 @@ export const SelectionModal = (props) => {
   const getFood = async (id, e) => {
     setClickedSubCategory(Number(e.target.id));
     const res = await axios.get(API.GETFOODS + "/" + id).catch((err) => {
-      alert("잠시 후 다시 시도해주세요.");
+      isExpiration(err.response.data.statusCode);
     });
     setFoodData(res.data);
   };
@@ -95,9 +97,11 @@ export const SelectionModal = (props) => {
         config
       )
       .catch((err) => {
-        alert("잠시 후 다시 시도해주세요.");
+        isExpiration(err.response.data.statusCode);
       });
     props.asyncgetKcalData();
+    props.getBarGraphData(props.barPeriod);
+    props.getCircleDate(props.ciclePeriod);
     props.setModalVisible(false);
   };
   return (
