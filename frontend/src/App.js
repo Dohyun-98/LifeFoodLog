@@ -1,11 +1,13 @@
-import { Header } from "./components/Header";
+import React from "react";
+
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Footer } from "./components/Footer";
-import { Login } from "./components/Login";
-import { Signup } from "./components/Signup";
 
 import "./app.css";
 import { NotFound } from "./components/errors/404";
+import { Header } from "./components/Header";
+import { Footer } from "./components/Footer";
+import { Login } from "./components/Login";
+import { Signup } from "./components/Signup";
 import { Home } from "./components/Home";
 import { PrivateRoute } from "./components/PrivateRoute";
 import { MyPage } from "./components/MyPage";
