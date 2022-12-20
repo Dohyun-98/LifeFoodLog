@@ -1,4 +1,4 @@
-import { getCookie } from "./cookie/cookie";
+import { getCookie } from "../cookie/cookie";
 
 export const isLogin = () => {
   const accessToken = getCookie("accessToken");

@@ -48,7 +48,6 @@ export const Board = () => {
       .catch((err) => {
         isExpiration(err.response.data.statusCode);
       });
-    console.log(data.data);
     setLastPage(data.data);
   };
 

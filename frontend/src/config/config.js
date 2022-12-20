@@ -33,5 +33,6 @@ export const API = {
   CHANGEPASSWORD: `${BASE_URL}/users/password`,
   DELETEUSER: `${BASE_URL}/users`,
   COMMENT: `${BASE_URL}/comments`,
+  GETAVG: `${BASE_URL}/today-kcal/all`,
   //   RELATED: `${BASE_URL}/postings`,
 };

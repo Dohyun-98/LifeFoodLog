@@ -17,6 +17,7 @@ export const MyPage = () => {
 
   useEffect(() => {
     getMyProfile();
+    getTotalKcalAvg();
   }, []);
 
   const getMyProfile = async () => {
@@ -31,6 +32,18 @@ export const MyPage = () => {
     if (data) {
       setProfile(data.data);
     }
+  };
+
+  const getTotalKcalAvg = async () => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${getCookie("accessToken")}`,
+      },
+    };
+    const data = await axios.get(API.GETAVG, config).catch((err) => {
+      isExpiration(err.response.data.statusCode);
+    });
+    setTotalKcal(parseInt(data.data.totalKcal));
   };
 
   const updateNicknameFn = async () => {
@@ -123,7 +136,7 @@ export const MyPage = () => {
             Authorization: `Bearer ${getCookie("accessToken")}`,
           },
         };
-        const data = await axios
+        await axios
           .delete(API.DELETEUSER, config)
           .then(() => {
             removeCookie("accessToken");
@@ -133,7 +146,6 @@ export const MyPage = () => {
           .catch((err) => {
             isExpiration(err.response.data.statusCode);
           });
-        console.log(data);
       }
     }
   };
@@ -254,7 +266,8 @@ export const MyPage = () => {
           <div className="total-avg-content">
             <h2>전체 평균 칼로리</h2>
             <p>
-              {profile.nickname}님은 전체 평균 하루 {totalKcal}kcal 입니다.
+              {profile.nickname}님은 하루 평균 대략 {totalKcal}kcal를
+              섭취하셨습니다.
             </p>
           </div>
         </div>

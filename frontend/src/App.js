@@ -14,6 +14,9 @@ import { MyPage } from "./components/MyPage";
 import { Board } from "./components/Board";
 import { WriteBoard } from "./components/WriteBoard";
 import { BoardDetail } from "./components/BoardDetail";
+import { Forbidden } from "./components/errors/401";
+import { AdminRoute } from "./components/AdminRoute";
+import { AdminPage } from "./components/AdminPage";
 
 // PrivateRoute로 / 접근
 function App() {
@@ -42,8 +45,13 @@ function App() {
                 path="/board/:id"
                 element={<PrivateRoute component={BoardDetail} />}
               />
+              <Route
+                path="/admin"
+                element={<AdminRoute component={AdminPage} />}
+              />
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
+              <Route path="/401" element={<Forbidden />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </div>

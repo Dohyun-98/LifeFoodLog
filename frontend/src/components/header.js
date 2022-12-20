@@ -2,11 +2,13 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { removeCookie } from "../utils/cookie/cookie";
-import { isLogin } from "../utils/isLogin";
+import { isAdmin } from "../utils/unauth/isAdmin";
+import { isLogin } from "../utils/unauth/isLogin";
 import "./css/header.css";
 
 export const Header = () => {
   const [isLoginValid, setIsLoginValid] = useState(false);
+  const [isAdminValid, setIsAdminValid] = useState(false);
 
   const logout = () => {
     removeCookie("accessToken");
@@ -17,6 +19,9 @@ export const Header = () => {
   useEffect(() => {
     const login = isLogin();
     if (login) setIsLoginValid(true);
+    const admin = isAdmin();
+    if (admin) setIsAdminValid(true);
+    else setIsAdminValid(false);
   }, []);
 
   return (
@@ -28,6 +33,13 @@ export const Header = () => {
       </h1>
       <nav>
         <ul>
+          {isAdminValid ? (
+            <li>
+              <Link to="/admin" className="link">
+                관리자 페이지
+              </Link>
+            </li>
+          ) : null}
           <li>
             {isLoginValid ? (
               <Link to="/board" className="link">
