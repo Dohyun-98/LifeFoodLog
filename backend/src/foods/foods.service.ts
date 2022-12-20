@@ -50,4 +50,17 @@ export class FoodsService {
         );
       });
   }
+
+  async delete(id) {
+    const isExist = await this.foodRepository.findOne({
+      where: {
+        id,
+      },
+    });
+    if (!isExist) {
+      throw new UnprocessableEntityException('food not found');
+    }
+    const result = await this.foodRepository.delete(id);
+    return result.affected ? true : false;
+  }
 }

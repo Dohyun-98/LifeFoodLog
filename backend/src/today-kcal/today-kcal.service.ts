@@ -147,4 +147,20 @@ export class TodayKcalService {
     );
     return todayKcal;
   }
+
+  async findAvgOfAll(userId: string) {
+    const result = await this.todayKcalRepository
+      .createQueryBuilder('todayKcal')
+      .select(
+        'AVG(todayKcal.breakfastKcal) as breakfastKcal, AVG(todayKcal.lunchKcal) as lunchKcal, AVG(todayKcal.dinnerKcal) as dinnerKcal, AVG(todayKcal.totalKcal) as totalKcal',
+      )
+
+      .where('todayKcal.user = :userId', {
+        userId,
+      })
+
+      .getRawOne();
+    // console.log(result);
+    return result;
+  }
 }

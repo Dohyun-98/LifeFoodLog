@@ -12,7 +12,7 @@ export class BoardsService {
 
   async findMaxPage(limit: number) {
     const total = await this.boardsRepository.count();
-    return Math.ceil(total / limit);
+    return Math.ceil(total / limit) === 0 ? 1 : Math.ceil(total / limit);
   }
 
   async findListByPage(page: number, limit: number) {

@@ -1,4 +1,15 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
+import { Roles } from 'src/commons/decorators/roles.decorator';
+import { JwtAuthGuard } from 'src/commons/guards/jwt-auth.guard';
+import { Role } from 'src/commons/types/role';
 import { MainCategoryCreateDto } from './dto/main-category.create.dto';
 import { MainCategoryRequestDto } from './dto/main-category.request.dto';
 import { MainCategoryService } from './main-category.service';
@@ -13,9 +24,18 @@ export class MainCategoryController {
   }
 
   @Post()
+  @Roles(Role.ADMIN)
+  @UseGuards(JwtAuthGuard)
   async createMainCategory(
     @Body() body: MainCategoryCreateDto,
   ): Promise<MainCategoryRequestDto> {
     return await this.mainCategoryService.create(body.name);
+  }
+
+  @Delete('/:id')
+  @Roles(Role.ADMIN)
+  @UseGuards(JwtAuthGuard)
+  async deleteMainCategory(@Param('id') id: string): Promise<boolean> {
+    return await this.mainCategoryService.delete(id);
   }
 }

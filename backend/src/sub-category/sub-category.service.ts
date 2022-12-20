@@ -42,4 +42,17 @@ export class SubCategoryService {
         );
       });
   }
+
+  async delete(id) {
+    const isExist = await this.subCategoryRepository.findOne({
+      where: {
+        id,
+      },
+    });
+    if (!isExist) {
+      throw new UnprocessableEntityException('sub category not found');
+    }
+    const result = await this.subCategoryRepository.delete(id);
+    return result.affected ? true : false;
+  }
 }

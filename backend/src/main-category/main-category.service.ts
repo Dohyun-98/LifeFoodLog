@@ -27,4 +27,17 @@ export class MainCategoryService {
       name,
     });
   }
+
+  async delete(id) {
+    const isExist = await this.mainCategoryRepository.findOne({
+      where: {
+        id,
+      },
+    });
+    if (!isExist) {
+      throw new UnprocessableEntityException('main category not found');
+    }
+    const result = await this.mainCategoryRepository.delete(id);
+    return result.affected ? true : false;
+  }
 }

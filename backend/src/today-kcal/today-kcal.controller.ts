@@ -42,4 +42,10 @@ export class TodayKcalController {
   ) {
     return await this.todayKcalService.findByMonth(req.user.id, period);
   }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('/all')
+  async getTodayKcalAvgOfAll(@Req() req: JwtUser) {
+    return await this.todayKcalService.findAvgOfAll(req.user.id);
+  }
 }

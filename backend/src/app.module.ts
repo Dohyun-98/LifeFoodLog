@@ -13,6 +13,7 @@ import { SubCategoryModule } from './sub-category/sub-category.module';
 import { FoodLogModule } from './food-log/food-log.module';
 import { TodayKcalModule } from './today-kcal/today-kcal.module';
 import { BoardsModule } from './boards/boards.module';
+import { CommentModule } from './comment/comment.module';
 import * as redisStore from 'cache-manager-redis-store';
 
 @Module({
@@ -54,6 +55,7 @@ import * as redisStore from 'cache-manager-redis-store';
     FoodLogModule,
     TodayKcalModule,
     BoardsModule,
+    CommentModule,
   ],
   controllers: [AppController],
   providers: [AppService],
