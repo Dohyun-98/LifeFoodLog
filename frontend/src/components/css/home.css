@@ -79,6 +79,7 @@ body {
 
 .select-chart {
   border: none;
+  width: 100px;
 }
 .rv-xy-plot__series--label-text {
   fill: white;
