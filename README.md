@@ -15,10 +15,11 @@
 
 ### 메인기능
 
-1. 기록된 하루 단위의 열량 계산과 통계
-2. 하루 , 일주일, 한달, 1년 평균통계를 기록 및 차트로 확인
-3. 게시글로 정보 공유
-4. 관리자 페이지(음식 및 열량 추가,수정,삭제)
+1. 메인화면 - 하루열량통계(그래프, 텍스트)
+2. 게시판 - 게시글 쓰기,등록,삭제,조회 
+3. 상세게시판 - 조회, 댓글 등록,수정,삭제,조회
+4. 마이페이지 - 닉네임 변경, 패스워드 변경, 회원탈퇴, 전체 하루 통계
+5. 관리자 페이지 - 카테고리(메인,서브) [등록, 수정 ,삭제, 조회] + 음식 [조회 등록 삭제 수정]
 
 ```
 * 로그인 하지 않았을 시, 모든 url 접속을 제한하고 로그인화면으로 redirect
@@ -77,9 +78,14 @@
 - 게시판 삭제<br>
 - 게시판 검색 [미완성 및 진행중]
 <br>
-```
-게시판 검색은 elastic search 사용 유무를 결정하기 위해 보류
-```
+
+### 상세 게시판
+<p align="left">
+<img src="https://user-images.githubusercontent.com/68360133/209036482-0c8fbbee-99ff-4105-ae3c-f3c2b1d7c35f.png" width="800px">
+</p>
+<p align="left">
+<img src="https://user-images.githubusercontent.com/68360133/209036291-674b40e5-6464-4c1d-99ca-d87c52e726e5.png" width="800px">
+</p>
 
 ### 5. 마이페이지
 
@@ -95,4 +101,7 @@
 <p align="left">
 <img src="https://user-images.githubusercontent.com/68360133/207846843-ae473105-53fe-4fd2-98cc-046af75fa0bb.gif" width="800px">
 </p>
-- 나의 전체 평균 칼로리 [미완성 및 진행중]
+- 나의 전체 평균 칼로리 
+<p align="left">
+<img src="https://user-images.githubusercontent.com/68360133/209036613-355a3029-b2b4-4e03-9c9a-7c1c9b1e0ea7.png" width="800px">
+</p>
