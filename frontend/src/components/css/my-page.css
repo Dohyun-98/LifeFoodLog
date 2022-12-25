@@ -164,3 +164,10 @@
   margin-bottom: 20px;
   color: gray;
 }
+
+.info-message {
+  padding-top: 10px;
+  font-size: 12px;
+  font-weight: 500;
+  color: orange;
+}

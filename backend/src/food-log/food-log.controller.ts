@@ -8,7 +8,6 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/commons/guards/jwt-auth.guard';
-import { JwtStrategy } from 'src/commons/strategies/jwt.strategy';
 import { JwtUser } from 'src/commons/types/jwtUser';
 import { MealTime } from 'src/commons/types/mealTime';
 import { FoodLogCreateDto } from './dto/food-log.create.dto';
@@ -71,5 +70,11 @@ export class FoodLogController {
   ) {
     console.log('period', period, req.user);
     return await this.foodLogService.getFoodClassifyLog(req.user.id, period);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('/date/:date')
+  async getDailyFoodData(@Req() req: JwtUser, @Param('date') date: string) {
+    return await this.foodLogService.FindDailyFood(req.user.id, date);
   }
 }

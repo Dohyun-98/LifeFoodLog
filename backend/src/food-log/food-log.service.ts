@@ -105,4 +105,18 @@ export class FoodLogService {
 
     return foodLogCount;
   }
+
+  async FindDailyFood(userId: string, date: string) {
+    const foodLog = await this.foodLogRepository
+      .createQueryBuilder('foodLog')
+      .leftJoinAndSelect('foodLog.food', 'food')
+      .select('foodLog.mealtime')
+      .addSelect('food.name')
+      .addSelect('food.kcal')
+      .addSelect('foodLog.createdAt')
+      .where('foodLog.user.id = :userId', { userId })
+      .andWhere('foodLog.createdAt like :day', { day: `%${date}%` })
+      .getMany();
+    return foodLog;
+  }
 }

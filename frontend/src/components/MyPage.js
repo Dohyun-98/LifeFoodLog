@@ -269,6 +269,9 @@ export const MyPage = () => {
               {profile.nickname}님은 하루 평균 대략 {totalKcal}kcal를
               섭취하셨습니다.
             </p>
+            <div className="info-message">
+              * 전체 평균 칼로리는 기록된 일수를 기준으로 합니다.
+            </div>
           </div>
         </div>
       </div>

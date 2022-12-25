@@ -8,18 +8,24 @@ import {
   RadialChart,
   DiscreteColorLegend,
 } from "react-vis";
+import Calendar from "react-calendar";
 import { SelectDashBoard } from "./SelectDashBoard";
 import { SelectionModal } from "./SelectionModal";
 import axios from "axios";
 import { API } from "../config/config";
 import { getCookie } from "../utils/cookie/cookie";
 import { isExpiration } from "../utils/cookie/is-expiration";
+import "react-calendar/dist/Calendar.css";
 
 export const Home = () => {
   const [breakfast_kcal, setBreakfastKcal] = useState(0);
   const [lunchKcal_kcal, setLunchKcal] = useState(0);
   const [dinnerKcal_kcal, setDinnerKcal] = useState(0);
   const [totalKcal, setTotalKcal] = useState(0);
+  const [date, setDate] = useState(new Date());
+  const [breakfastFood, setBreakfastFood] = useState([]);
+  const [lunchFood, setLunchFood] = useState([]);
+  const [dinnerFood, setDinnerFood] = useState([]);
 
   const [time, setTime] = useState("");
   const [periodBreakfast, setPeriodBreakfast] = useState([]);
@@ -29,6 +35,7 @@ export const Home = () => {
   const [circleData, setCircleData] = useState([]);
   const [barPeriod, setBarPeriod] = useState(7);
   const [ciclePeriod, setCiclePeriod] = useState(7);
+  const [visibleCalender, setVisibleCalender] = useState(false);
 
   async function asyncgetKcalData() {
     const config = {
@@ -133,6 +140,14 @@ export const Home = () => {
     getBarGraphData(7);
     getCircleDate(7);
   }, []);
+
+  useEffect(() => {
+    const newDate = new Date(date);
+    const year = newDate.getFullYear();
+    const month = String(newDate.getMonth() + 1).padStart(2, "0");
+    const day = String(newDate.getDate()).padStart(2, "0");
+    getFoodData(`${year}-${month}-${day}`);
+  }, [date]);
 
   const getGraph = (value) => {
     if (value === "7") {
@@ -243,6 +258,32 @@ export const Home = () => {
         isExpiration(err.response.data.statusCode);
       });
     setCircleData(data.data);
+  };
+
+  const getFoodData = async (value) => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${getCookie("accessToken")}`,
+      },
+    };
+    const data = await axios
+      .get(API.CREATEFOODLOG + "/date/" + value, config)
+      .catch((err) => {
+        isExpiration(err.response.data.statusCode);
+      });
+    const breakfast = data.data.filter((el) => {
+      return el.mealtime === "breakfast";
+    });
+    const lunch = data.data.filter((el) => {
+      return el.mealtime === "lunch";
+    });
+    const dinner = data.data.filter((el) => {
+      return el.mealtime === "dinner";
+    });
+
+    setBreakfastFood(breakfast);
+    setLunchFood(lunch);
+    setDinnerFood(dinner);
   };
 
   const visibleModal = (time) => {
@@ -381,6 +422,120 @@ export const Home = () => {
           }}
           showLabels
         />
+      </div>
+      <div className="wrapper-title">
+        <span>섭취 음식 조회</span>
+        <div className="calender-wrapper">
+          <div className="move-day">
+            <div
+              className="move-day-button"
+              onClick={() => {
+                setDate(new Date(date.setDate(date.getDate() - 1)));
+              }}
+            >
+              {"<"}
+            </div>
+            <div
+              onClick={() => {
+                setVisibleCalender(true);
+              }}
+            >{`${date.getFullYear()}-${String(date.getMonth() + 1).padStart(
+              2,
+              "0"
+            )}-${String(date.getDate()).padStart(2, "0")}`}</div>
+            <div
+              className="move-day-button"
+              onClick={() => {
+                if (date.getDate() >= new Date().getDate()) {
+                  alert("오늘 날짜가 최대 날짜입니다.");
+                  return;
+                } else {
+                  setDate(new Date(date.setDate(date.getDate() + 1)));
+                }
+              }}
+            >
+              {">"}
+            </div>
+            <div className="calender-box">
+              {visibleCalender ? (
+                <Calendar
+                  minDate={new Date(2020, 12, 31)}
+                  maxDate={new Date()}
+                  className={"calender"}
+                  onChange={(e) => {
+                    setDate(new Date(e));
+                    setVisibleCalender(false);
+                  }}
+                  value={date}
+                  // onClickDay={onClickDay}
+                  // onClickMonth={onClickMonth}
+                  // onClickYear={onClickYear}
+
+                  locale="ko-KR"
+                />
+              ) : null}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="daily-food-container">
+        <div className="daily-food-box">
+          <div className="daily-food-title">breakfast</div>
+          <div className="daily-food-box-items">
+            {breakfastFood.length > 0 ? (
+              breakfastFood.map((item, index) => {
+                return (
+                  <div className="daily-food-item" key={item}>
+                    <div className="daily-food-name">{item.food.name}</div>
+                    <div className="daily-food-gram">{item.food.kcal} Kcal</div>
+                  </div>
+                );
+              })
+            ) : (
+              <div className="daily-food-item">
+                <div className="no-data"> 데이터가 존재하지 않습니다.</div>
+              </div>
+            )}
+          </div>
+        </div>
+        <div className="daily-food-box">
+          <div className="daily-food-title">lunch</div>
+          <div className="daily-food-list">
+            {lunchFood.length > 0 ? (
+              lunchFood.map((item, index) => {
+                return (
+                  <div className="daily-food-item" key={item}>
+                    <div className="daily-food-name">{item.food.name}</div>
+                    <div className="daily-food-gram">{item.food.kcal} Kcal</div>
+                  </div>
+                );
+              })
+            ) : (
+              <div className="daily-food-item">
+                <div className="no-data"> 데이터가 존재하지 않습니다.</div>
+              </div>
+            )}
+          </div>
+        </div>
+        <div className="daily-food-box">
+          <div className="daily-food-title">dinner</div>
+          <div className="daily-food-list">
+            {dinnerFood.length > 0 ? (
+              dinnerFood.map((item, index) => {
+                return (
+                  <div className="daily-food-item" key={item}>
+                    <div className="daily-food-name">{item.food.name}</div>
+                    <div className="daily-food-gram">{item.food.kcal} Kcal</div>
+                  </div>
+                );
+              })
+            ) : (
+              <div className="daily-food-item">
+                <div className="no-data"> 데이터가 존재하지 않습니다.</div>
+              </div>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );
