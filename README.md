@@ -16,6 +16,13 @@
 4. redis
 ```
 
+### 엔티티 관계도
+
+<p align="left">
+<img src="https://user-images.githubusercontent.com/68360133/210166143-77d89bae-86a0-441f-986e-a2c706ece775.png" width="800px">
+</p>
+
+
 ### 메인기능
 
 1. 메인화면 - 오늘섭취음식등록, 섭취음식 일자별 조회, 하루열량통계(그래프, 텍스트)
