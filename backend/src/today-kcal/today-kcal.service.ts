@@ -61,8 +61,11 @@ export class TodayKcalService {
 
   async findByDay(userId: string, period: number) {
     // 쿼리 빌더를 이용해 오늘부터 period일 전까지의 데이터를 가져온다.
+    console.log(new Date(new Date().setDate(new Date().getDate() - period)));
+    // 오늘 23시 59분 59초 999밀리초까지 콘솔로 출력
+    console.log(new Date(new Date().setHours(23, 59, 59, 999)));
+    console.log('times');
     const todayKcal = await this.todayKcalRepository
-
       .createQueryBuilder('todayKcal')
       .where(
         'todayKcal.user = :userId AND todayKcal.createdAt BETWEEN :startDate AND :endDate',
@@ -76,6 +79,7 @@ export class TodayKcalService {
       )
       .orderBy('todayKcal.createdAt', 'ASC')
       .getMany();
+    console.log(todayKcal);
     return todayKcal;
   }
 

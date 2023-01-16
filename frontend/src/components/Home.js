@@ -67,14 +67,14 @@ export const Home = () => {
       .catch((err) => {
         isExpiration(err.response.data.statusCode);
       });
+
     const breakdfast = Array.from({ length: period }, (v, i) => {
       const date = new Date(
         Date.now() - (period - i - 1) * 24 * 60 * 60 * 1000
       );
-      const xDate = `${date.getMonth() + 1}/${String(date.getDate()).padStart(
-        2,
-        "0"
-      )}`;
+      const xDate = `${String(date.getMonth() + 1).padStart(2, "0")}/${String(
+        date.getDate()
+      ).padStart(2, "0")}`;
       const yData = data.data.filter((el) => {
         const elDate =
           el.createdAt.split("-")[1] +
@@ -87,16 +87,16 @@ export const Home = () => {
         y: yData[0] ? yData[0].breakfastKcal : 0,
       };
     });
+    console.log(breakdfast);
     setPeriodBreakfast(breakdfast);
 
     const lunch = Array.from({ length: period }, (v, i) => {
       const date = new Date(
         Date.now() - (period - i - 1) * 24 * 60 * 60 * 1000
       );
-      const xDate = `${date.getMonth() + 1}/${String(date.getDate()).padStart(
-        2,
-        "0"
-      )}`;
+      const xDate = `${String(date.getMonth() + 1).padStart(2, "0")}/${String(
+        date.getDate()
+      ).padStart(2, "0")}`;
       const yData = data.data.filter((el) => {
         const elDate =
           el.createdAt.split("-")[1] +
@@ -110,15 +110,15 @@ export const Home = () => {
       };
     });
     setPeriodLunch(lunch);
+    console.log(lunch);
 
     const dinner = Array.from({ length: period }, (v, i) => {
       const date = new Date(
         Date.now() - (period - i - 1) * 24 * 60 * 60 * 1000
       );
-      const xDate = `${date.getMonth() + 1}/${String(date.getDate()).padStart(
-        2,
-        "0"
-      )}`;
+      const xDate = `${String(date.getMonth() + 1).padStart(2, "0")}/${String(
+        date.getDate()
+      ).padStart(2, "0")}`;
       const yData = data.data.filter((el) => {
         const elDate =
           el.createdAt.split("-")[1] +
@@ -132,6 +132,7 @@ export const Home = () => {
       };
     });
     setPeriodDinner(dinner);
+    console.log(dinner);
   };
 
   useEffect(() => {
@@ -212,8 +213,12 @@ export const Home = () => {
     const breakfast = data.data.map((el, i) => {
       return {
         x:
-          thisMonth - period + 1 < 0
+          thisMonth - period + 1 + i < 0
             ? thisMonth - period + 1 + i + 12 + "월"
+            : thisMonth - period + 1 + i > 12
+            ? thisMonth - period + 1 + i - 12 + "월"
+            : thisMonth - period + 1 + i === 0
+            ? 12 + "월"
             : thisMonth - period + 1 + i + "월",
         y: el.breakfastKcal ? parseInt(el.breakfastKcal) : 0,
       };
@@ -222,8 +227,12 @@ export const Home = () => {
     const lunch = data.data.map((el, i) => {
       return {
         x:
-          thisMonth - period + 1 < 0
+          thisMonth - period + 1 + i < 0
             ? thisMonth - period + 1 + i + 12 + "월"
+            : thisMonth - period + 1 + i > 12
+            ? thisMonth - period + 1 + i - 12 + "월"
+            : thisMonth - period + 1 + i === 0
+            ? 12 + "월"
             : thisMonth - period + 1 + i + "월",
         y: el.lunchKcal ? parseInt(el.lunchKcal) : 0,
       };
@@ -232,8 +241,12 @@ export const Home = () => {
     const dinner = data.data.map((el, i) => {
       return {
         x:
-          thisMonth - period + 1 < 0
+          thisMonth - period + 1 + i < 0
             ? thisMonth - period + 1 + i + 12 + "월"
+            : thisMonth - period + 1 + i > 12
+            ? thisMonth - period + 1 + i - 12 + "월"
+            : thisMonth - period + 1 + i === 0
+            ? 12 + "월"
             : thisMonth - period + 1 + i + "월",
         y: el.dinnerKcal ? parseInt(el.dinnerKcal) : 0,
       };
