@@ -76,9 +76,9 @@
 <img src="https://user-images.githubusercontent.com/68360133/207038317-85645c29-bbb7-47f2-aa19-dba66f5dd3fe.png" width="800px">
 </p>
 4. 특정 날짜 열량 및 섭취 음식 조회<br>
-
+- 날짜선택(화살표 및 캘린더 선택)
 <p align="left">
-<img src="https://user-images.githubusercontent.com/68360133/209458109-69ec7d65-7b17-471d-949f-b25f1d6dc447.gif" width="800px">
+<img src="https://user-images.githubusercontent.com/68360133/212676682-b20b8121-b402-40dc-9786-1eb5385b1e5b.png" width="800px">
 </p>
 
 ### 4. 게시판
